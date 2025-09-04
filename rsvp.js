@@ -85,8 +85,11 @@ const el = id => document.getElementById(id);
 /* Show errors on page so you can see what’s wrong */
 function showError(err) {
   console.error(err);
-  const m = el("message");
-  if (m) m.textContent = `⚠️ Script error: ${err.message || err}`;
+  const debug = el("debug");
+  if (debug) {
+    debug.style.display = "block";
+    debug.textContent = `⚠️ Script error:\n${err.stack || err}`;
+  }
 }
 
 /* ======== CHECK (runs when you click the “Check” button) ======== */
