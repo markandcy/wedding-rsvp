@@ -1,4 +1,4 @@
-/* ======== GUEST LIST (edit as needed) ======== */
+/* ======== GUEST LIST ======== */
 const guestList = {
   "Cyrel Anne Soriano": 1,
   "Mark Anthony Pena": 1,
@@ -77,14 +77,13 @@ const guestList = {
   "Ella": 1
 };
 
-/* Build a case-insensitive lookup */
+/* Build case-insensitive lookup */
 const nameLookup = {};
 Object.keys(guestList).forEach(n => nameLookup[n.toLowerCase()] = n);
 
-/* Shortcuts */
 const el = id => document.getElementById(id);
 
-/* Show errors on page so you can see what’s wrong */
+/* Show errors */
 function showError(err) {
   console.error(err);
   const debug = el("debug");
@@ -94,12 +93,35 @@ function showError(err) {
   }
 }
 
-/* ======== CHECK (runs when you click the “Check” button) ======== */
+/* ======== AUTOCOMPLETE ======== */
+window.showSuggestions = function () {
+  const input = el("guestName").value.toLowerCase();
+  const suggestionBox = el("suggestions");
+  suggestionBox.innerHTML = "";
+
+  if (input.length < 2) return;
+
+  const matches = Object.keys(guestList).filter(name =>
+    name.toLowerCase().includes(input)
+  );
+
+  matches.forEach(name => {
+    const div = document.createElement("div");
+    div.classList.add("suggestion-item");
+    div.textContent = name;
+    div.onclick = () => {
+      el("guestName").value = name;
+      suggestionBox.innerHTML = "";
+    };
+    suggestionBox.appendChild(div);
+  });
+};
+
+/* ======== CHECK BUTTON ======== */
 window.checkGuest = function () {
   try {
     const raw = el("guestName").value.trim();
-    const input = raw.replace(/\s+/g, " ");           // collapse multiple spaces
-    const key = nameLookup[input.toLowerCase()];       // case-insensitive match
+    const key = nameLookup[raw.toLowerCase()];
     const seatInfo = el("seatInfo");
     const rsvpForm = el("rsvpForm");
     const attendeeInputs = el("attendeeInputs");
@@ -119,10 +141,8 @@ window.checkGuest = function () {
     rsvpForm.classList.remove("hidden");
 
     if (seats === 1) {
-      // 1 seat → no inputs, they’ll just hit Submit
       attendeeInputs.innerHTML = `<p>(No extra names needed — RSVP is just for you ✅)</p>`;
     } else {
-      // 2+ seats → first input prefilled with main guest, rest blank & optional
       let html = `<input type="text" id="attendee1" value="${key}" readonly>`;
       for (let i = 2; i <= seats; i++) {
         html += `<input type="text" id="attendee${i}" placeholder="Guest ${i} Name">`;
@@ -134,11 +154,11 @@ window.checkGuest = function () {
   }
 };
 
-/* ======== SUBMIT (runs when you click “Submit RSVP”) ======== */
+/* ======== SUBMIT BUTTON ======== */
 window.submitRSVP = function () {
   try {
     const raw = el("guestName").value.trim();
-    const key = nameLookup[raw.replace(/\s+/g, " ").toLowerCase()];
+    const key = nameLookup[raw.toLowerCase()];
     const attendance = el("attendance").value;
     const message = el("message");
 
@@ -151,21 +171,17 @@ window.submitRSVP = function () {
     const attendees = [];
 
     if (seats === 1) {
-      attendees.push(key); // only main guest
+      attendees.push(key);
     } else {
       for (let i = 1; i <= seats; i++) {
         const input = el(`attendee${i}`);
         if (input && input.value.trim() !== "") attendees.push(input.value.trim());
       }
-      if (attendees.length === 0) attendees.push(key); // safety
+      if (attendees.length === 0) attendees.push(key);
     }
 
-    // 🔗 SEND TO GOOGLE (replace URL below when ready)
-    const APPS_SCRIPT_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL"; // must end with /exec
-    if (/YOUR_GOOGLE_APPS_SCRIPT_URL/.test(APPS_SCRIPT_URL)) {
-      // Don’t block the UI if you haven’t set the URL yet
-      message.textContent = "✅ RSVP captured locally (Google link not set yet).";
-      return;
+    // 🔗 Replace this with your Google Apps Script URL
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwE-IRcY0olWIleWaDKys0j88uhN_3zACe73YvdwjsKMzuENNKoE3W67oxLT8No83KMgg/exec";
     }
 
     fetch(APPS_SCRIPT_URL, {
