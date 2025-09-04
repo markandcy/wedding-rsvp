@@ -77,7 +77,34 @@ const guestList = {
 
 // Function triggered when clicking "Check"
 function checkGuest() {
-  alert("✅ The button works!");
+  const name = document.getElementById("guestName").value.trim();
+  const seatInfo = document.getElementById("seatInfo");
+  const rsvpForm = document.getElementById("rsvpForm");
+  const attendeeInputs = document.getElementById("attendeeInputs");
+  const message = document.getElementById("message");
+
+  message.textContent = "";
+  attendeeInputs.innerHTML = "";
+
+  if (guestList[name] !== undefined) {
+    const seats = guestList[name];
+    seatInfo.textContent = `${name}, you have ${seats} reserved seat${seats > 1 ? "s" : ""}.`;
+    rsvpForm.classList.remove("hidden");
+
+    if (seats > 1) {
+      for (let i = 1; i <= seats; i++) {
+        attendeeInputs.innerHTML += `
+          <input type="text" id="attendee${i}" placeholder="Guest ${i} Name" required>
+        `;
+      }
+    } else {
+      // 1 seat → no need to type name, auto-fill main guest
+      attendeeInputs.innerHTML = `<input type="text" id="attendee1" value="${name}" readonly>`;
+    }
+  } else {
+    seatInfo.textContent = "❌ Sorry, your name was not found on the guest list.";
+    rsvpForm.classList.add("hidden");
+  }
 }
   const name = document.getElementById("guestName").value.trim();
   const seatInfo = document.getElementById("seatInfo");
