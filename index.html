@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mark & Cy Wedding RSVP</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Mark & Cy's Wedding RSVP 💍</h1>
+  <div class="form-box">
+    <label for="guestName">Enter Your Full Name</label>
+    <input type="text" id="guestName" placeholder="Type your name...">
+    <button onclick="checkGuest()">Check</button>
+    
+    <div id="rsvpForm" class="hidden">
+      <p id="seatInfo"></p>
+      <label>Will you attend?</label>
+      <select id="attendance">
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
+      <div id="attendeeInputs"></div>
+      <button onclick="submitRSVP()">Submit RSVP</button>
+    </div>
+    
+    <p id="message"></p>
+  </div>
+  
+  <script src="rsvp.js"></script>
+</body>
+</html>
