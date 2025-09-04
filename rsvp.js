@@ -1,3 +1,4 @@
+// Guest list with seat allocation
 const guestList = {
   "Antonio Reyes": 2,
   "Jojo Agot": 2,
@@ -74,65 +75,77 @@ const guestList = {
   "Ella": 1
 };
 
+// Function triggered when clicking "Check"
 function checkGuest() {
-  const inputName = document.getElementById("guestName").value.trim();
-  const seats = guestList[inputName];
-
-  if (seats) {
-    showRSVPForm(inputName, seats);
-  } else {
-    alert("Sorry, your name is not on the guest list.");
-  }
-}
-
-function showRSVPForm(guestName, seats) {
-  const formBox = document.getElementById("form-box");
-  let fields = "";
-
-  if (seats > 1) {
-    fields += `<input type="text" id="guest-1" value="${guestName}" readonly />`;
-    for (let i = 2; i <= seats; i++) {
-      fields += `<input type="text" id="guest-${i}" placeholder="Guest ${i} Name (optional)" />`;
-    }
-  }
-
-  formBox.innerHTML = `
-    <h2>Hello, ${guestName}!</h2>
-    <p>You have <strong>${seats}</strong> seat${seats > 1 ? "s" : ""} reserved.</p>
-    <form id="rsvp-form">
-      ${fields}
-      <button type="button" onclick="submitRSVP('${guestName}', ${seats})">Confirm Attendance</button>
-    </form>
-    <div id="message"></div>
-  `;
-}
-
-function submitRSVP(guestName, seats) {
-  let attendees = [];
-
-  if (seats === 1) {
-    attendees.push(guestName); // auto-add solo guest
-  } else {
-    for (let i = 1; i <= seats; i++) {
-      const field = document.getElementById(`guest-${i}`);
-      if (field && field.value.trim()) {
-        attendees.push(field.value.trim());
-      }
-    }
-  }
-
+  const name = document.getElementById("guestName").value.trim();
+  const seatInfo = document.getElementById("seatInfo");
+  const rsvpForm = document.getElementById("rsvpForm");
+  const attendeeInputs = document.getElementById("attendeeInputs");
   const message = document.getElementById("message");
-  message.innerHTML = `✅ Thank you, ${guestName}! We saved your RSVP for ${attendees.length} guest(s).`;
 
-  // 🔗 Send data to Google Sheets
-  fetch("https://script.google.com/macros/s/AKfycbxCLI-6iddHLx9ni3goQWXRfyXDDqIZyEefgvCjB1RYB_lYHS9bAN7rMO50Hi52bBnyFQ/exec", {
+  message.textContent = "";
+  attendeeInputs.innerHTML = "";
+
+  if (guestList[name] !== undefined) {
+    const seats = guestList[name];
+    seatInfo.textContent = `${name}, you have ${seats} reserved seat${seats > 1 ? "s" : ""}.`;
+    rsvpForm.classList.remove("hidden");
+
+    if (seats > 1) {
+      for (let i = 1; i <= seats; i++) {
+        attendeeInputs.innerHTML += `
+          <input type="text" id="attendee${i}" placeholder="Guest ${i} Name" required>
+        `;
+      }
+    } else {
+      // 1 seat → auto-fill the single guest
+      attendeeInputs.innerHTML = `<input type="text" id="attendee1" value="${name}" readonly>`;
+    }
+  } else {
+    seatInfo.textContent = "Sorry, your name was not found on the guest list.";
+    rsvpForm.classList.add("hidden");
+  }
+}
+
+// Function triggered when clicking "Submit RSVP"
+function submitRSVP() {
+  const name = document.getElementById("guestName").value.trim();
+  const attendance = document.getElementById("attendance").value;
+  const message = document.getElementById("message");
+
+  if (guestList[name] === undefined) {
+    message.textContent = "Invalid guest name.";
+    return;
+  }
+
+  const seats = guestList[name];
+  const attendees = [];
+  for (let i = 1; i <= seats; i++) {
+    const guestName = document.getElementById(`attendee${i}`).value.trim();
+    attendees.push(guestName || `Guest ${i}`);
+  }
+
+  // Payload to send to Google Sheets later
+  const payload = {
+    mainGuest: name,
+    seatsAllocated: seats,
+    attendees: attendees,
+    attendance: attendance
+  };
+
+  console.log("Submitting RSVP:", payload);
+
+  // TODO: Replace with your Google Apps Script Web App URL
+  fetch("YOUR_GOOGLE_APPS_SCRIPT_URL", {
     method: "POST",
-    mode: "no-cors",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      mainGuest: guestName,
-      seatsAllocated: seats,
-      attendees: attendees
-    })
+    body: JSON.stringify(payload)
+  })
+  .then(res => res.json())
+  .then(data => {
+    message.textContent = "RSVP submitted successfully! Thank you 💖";
+  })
+  .catch(err => {
+    console.error(err);
+    message.textContent = "Error submitting RSVP. Please try again.";
   });
 }
