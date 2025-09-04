@@ -1,3 +1,13 @@
+body {
+  background: #fcefee !important;
+  font-family: "Georgia", serif !important;
+}
+h1 {
+  color: #d6336c !important;
+  text-align: center !important;
+}
+
+
 /* General reset */
 body {
   font-family: "Georgia", serif;
