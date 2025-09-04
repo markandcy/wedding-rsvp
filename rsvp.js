@@ -77,6 +77,8 @@ const guestList = {
 
 // Function triggered when clicking "Check"
 function checkGuest() {
+  alert("✅ The button works!");
+}
   const name = document.getElementById("guestName").value.trim();
   const seatInfo = document.getElementById("seatInfo");
   const rsvpForm = document.getElementById("rsvpForm");
