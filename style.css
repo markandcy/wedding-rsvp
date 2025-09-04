@@ -14,7 +14,7 @@ body {
   overflow-x: hidden;
 }
 
-/* Decorative floral background using PNG */
+/* Decorative floral background using your PNG */
 body::before,
 body::after {
   content: "";
@@ -36,7 +36,6 @@ body::after {
   bottom: 10px;
   right: 10px;
 }
-
 
 /* Title */
 h1 {
@@ -110,6 +109,30 @@ button:hover {
   font-weight: bold;
   font-size: 1.1rem;
   color: #2a9d8f;
+}
+
+/* Suggestions box */
+.suggestions-box {
+  background: #fff;
+  border: 1px solid #e0c3c3;
+  border-radius: 10px;
+  width: 80%;
+  margin: 0 auto 15px;
+  max-height: 150px;
+  overflow-y: auto;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  position: relative;
+  z-index: 5;
+}
+
+.suggestion-item {
+  padding: 8px 12px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.suggestion-item:hover {
+  background: #fcefee;
 }
 
 /* Hide/show elements */
