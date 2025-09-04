@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>Mark & Cy Wedding RSVP</title>
-  <!-- Link to external CSS -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,7 +10,7 @@
   <div class="form-box">
     <label for="guestName">Enter Your Full Name</label>
     <input type="text" id="guestName" placeholder="Type your name...">
-    <button id="checkBtn">Check</button>
+    <button onclick="checkGuest()">Check</button>
     
     <div id="rsvpForm" class="hidden">
       <p id="seatInfo"></p>
@@ -21,13 +20,12 @@
         <option value="No">No</option>
       </select>
       <div id="attendeeInputs"></div>
-      <button id="submitBtn">Submit RSVP</button>
+      <button onclick="submitRSVP()">Submit RSVP</button>
     </div>
     
     <p id="message"></p>
   </div>
-
-  <!-- Your JS -->
+  
   <script src="rsvp.js"></script>
 </body>
 </html>
