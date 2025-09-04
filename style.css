@@ -1,69 +1,101 @@
-/* General page background */
+/* General reset */
 body {
-  font-family: 'Georgia', serif;
-  background: linear-gradient(to bottom right, #fffaf0, #fdfdfd);
-  text-align: center;
+  font-family: "Georgia", serif;
+  background: linear-gradient(to bottom right, #fffaf5, #f9f7ff);
   margin: 0;
   padding: 0;
+  color: #444;
+  text-align: center;
 }
 
-/* Heading */
+/* Page title */
 h1 {
-  color: #6b4226; /* warm earthy brown */
-  font-family: 'Great Vibes', cursive;
-  font-size: 2.5rem;
-  margin-top: 2rem;
+  font-family: "Great Vibes", cursive;
+  font-size: 3em;
+  margin-top: 40px;
+  color: #d16ba5;
 }
 
 /* Form container */
 .form-box {
   background: #ffffff;
-  max-width: 500px;
-  margin: 2rem auto;
-  padding: 2rem;
-  border-radius: 16px;
-  border: 2px solid #f3d5d0; /* pastel border */
-  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  border: 2px solid #f3d1e0;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  max-width: 450px;
+  margin: 40px auto;
+  padding: 30px;
+  text-align: left;
+  position: relative;
 }
 
-/* Inputs and dropdowns */
+/* Labels and inputs */
+label {
+  font-weight: bold;
+  color: #6b4e71;
+  display: block;
+  margin: 15px 0 5px;
+}
+
 input, select {
   width: 100%;
-  padding: 0.7rem;
-  margin-top: 0.7rem;
-  border-radius: 8px;
-  border: 1px solid #dcb4a1;
-  background: #fffaf8;
-  font-size: 1rem;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  font-size: 1em;
 }
 
 /* Buttons */
 button {
-  background: #f28c8c; /* spring pink */
-  color: #fff;
+  background: linear-gradient(135deg, #f9a8d4, #fbcfe8);
   border: none;
-  cursor: pointer;
-  font-size: 1.1rem;
+  border-radius: 30px;
+  color: #fff;
   font-weight: bold;
-  padding: 0.8rem;
-  margin-top: 1rem;
-  border-radius: 10px;
-  transition: background 0.3s ease, transform 0.2s ease;
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1em;
 }
 
 button:hover {
-  background: #d96b6b;
+  background: linear-gradient(135deg, #f472b6, #f9a8d4);
   transform: scale(1.05);
 }
 
-/* Messages */
-#message {
-  margin-top: 1rem;
-  color: #6b4226;
-  font-weight: bold;
+/* Seat info + messages */
+#seatInfo {
+  font-style: italic;
+  margin-bottom: 10px;
+  color: #4b5563;
 }
 
-/* Hide until needed */
+#message {
+  margin-top: 15px;
+  font-weight: bold;
+  color: #16a34a; /* green for success */
+}
+
+/* Hidden form section */
 .hidden {
   display: none;
+}
+
+/* Decorative flowers (optional, top corners) */
+body::before, body::after {
+  content: "🌸";
+  position: fixed;
+  font-size: 2.5em;
+  opacity: 0.3;
+}
+
+body::before {
+  top: 20px;
+  left: 20px;
+}
+
+body::after {
+  bottom: 20px;
+  right: 20px;
 }
