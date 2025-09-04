@@ -9,7 +9,8 @@
   <h1>Mark & Cy's Wedding RSVP 💍</h1>
   <div class="form-box">
     <label for="guestName">Enter Your Full Name</label>
-    <input type="text" id="guestName" placeholder="Type your name...">
+    <input type="text" id="guestName" placeholder="Type your name..." oninput="showSuggestions()">
+    <div id="suggestions" class="suggestions-box"></div>
     <button onclick="checkGuest()">Check</button>
     
     <div id="rsvpForm" class="hidden">
