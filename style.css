@@ -1,111 +1,84 @@
-body {
-  background: #fcefee !important;
-  font-family: "Georgia", serif !important;
-}
-h1 {
-  color: #d6336c !important;
-  text-align: center !important;
-}
-
-
 /* General reset */
 body {
-  font-family: "Georgia", serif;
-  background: linear-gradient(to bottom right, #fffaf5, #f9f7ff);
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #fdfbfb, #ebedee);
+  color: #333;
   margin: 0;
   padding: 0;
-  color: #444;
   text-align: center;
 }
 
-/* Page title */
+/* Title */
 h1 {
-  font-family: "Great Vibes", cursive;
-  font-size: 3em;
-  margin-top: 40px;
-  color: #d16ba5;
+  font-family: "Playfair Display", serif;
+  font-size: 2.5rem;
+  margin-top: 30px;
+  color: #5c3d2e;
 }
 
-/* Form container */
+/* Form box */
 .form-box {
   background: #ffffff;
-  border: 2px solid #f3d1e0;
-  border-radius: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  max-width: 450px;
+  max-width: 500px;
   margin: 40px auto;
-  padding: 30px;
-  text-align: left;
-  position: relative;
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+  border: 2px solid #f2d7d5;
 }
 
-/* Labels and inputs */
+/* Labels */
 label {
-  font-weight: bold;
-  color: #6b4e71;
   display: block;
-  margin: 15px 0 5px;
+  margin: 15px 0 8px;
+  font-weight: 600;
+  color: #5c3d2e;
+  font-size: 1.1rem;
 }
 
-input, select {
-  width: 100%;
+/* Input + Select */
+input[type="text"], select {
   padding: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid #e0c3c3;
   border-radius: 10px;
+  width: 80%;
+  font-size: 1rem;
   margin-bottom: 15px;
-  font-size: 1em;
+  outline: none;
+  transition: border 0.3s ease;
+}
+
+input[type="text"]:focus, select:focus {
+  border-color: #a78bfa;
 }
 
 /* Buttons */
 button {
-  background: linear-gradient(135deg, #f9a8d4, #fbcfe8);
-  border: none;
-  border-radius: 30px;
+  background: #a8dadc;
   color: #fff;
-  font-weight: bold;
-  padding: 12px 20px;
+  font-size: 1rem;
+  border: none;
+  padding: 10px 20px;
+  margin: 10px;
+  border-radius: 30px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 1em;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
 button:hover {
-  background: linear-gradient(135deg, #f472b6, #f9a8d4);
+  background: #457b9d;
   transform: scale(1.05);
 }
 
-/* Seat info + messages */
-#seatInfo {
-  font-style: italic;
-  margin-bottom: 10px;
-  color: #4b5563;
-}
-
+/* Messages */
 #message {
-  margin-top: 15px;
+  margin-top: 20px;
   font-weight: bold;
-  color: #16a34a; /* green for success */
+  font-size: 1.1rem;
+  color: #2a9d8f;
 }
 
-/* Hidden form section */
+/* Hide/show elements */
 .hidden {
   display: none;
-}
-
-/* Decorative flowers (optional, top corners) */
-body::before, body::after {
-  content: "🌸";
-  position: fixed;
-  font-size: 2.5em;
-  opacity: 0.3;
-}
-
-body::before {
-  top: 20px;
-  left: 20px;
-}
-
-body::after {
-  bottom: 20px;
-  right: 20px;
 }
