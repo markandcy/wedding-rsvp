@@ -91,49 +91,75 @@ function checkGuest() {
     seatInfo.textContent = `${name}, you have ${seats} reserved seat${seats > 1 ? "s" : ""}.`;
     rsvpForm.classList.remove("hidden");
 
-    if (seats > 1) {
-      for (let i = 1; i <= seats; i++) {
+    if (seats === 1) {
+      // Only 1 seat → no inputs needed
+      attendeeInputs.innerHTML = `<p>(No extra names needed — RSVP is just for you ✅)</p>`;
+    } else {
+      // 2+ seats → auto-fill first slot with main guest
+      attendeeInputs.innerHTML = `
+        <input type="text" id="attendee1" value="${name}" readonly>
+      `;
+      // Add the rest of the slots as blank
+      for (let i = 2; i <= seats; i++) {
         attendeeInputs.innerHTML += `
-          <input type="text" id="attendee${i}" placeholder="Guest ${i} Name" required>
+          <input type="text" id="attendee${i}" placeholder="Guest ${i} Name">
         `;
       }
-    } else {
-      // 1 seat → no need to type name, auto-fill main guest
-      attendeeInputs.innerHTML = `<input type="text" id="attendee1" value="${name}" readonly>`;
     }
   } else {
     seatInfo.textContent = "❌ Sorry, your name was not found on the guest list.";
     rsvpForm.classList.add("hidden");
   }
-}
+}function submitRSVP() {
   const name = document.getElementById("guestName").value.trim();
-  const seatInfo = document.getElementById("seatInfo");
-  const rsvpForm = document.getElementById("rsvpForm");
-  const attendeeInputs = document.getElementById("attendeeInputs");
+  const attendance = document.getElementById("attendance").value;
   const message = document.getElementById("message");
 
-  message.textContent = "";
-  attendeeInputs.innerHTML = "";
-
-  if (guestList[name] !== undefined) {
-    const seats = guestList[name];
-    seatInfo.textContent = `${name}, you have ${seats} reserved seat${seats > 1 ? "s" : ""}.`;
-    rsvpForm.classList.remove("hidden");
-
-    if (seats > 1) {
-      for (let i = 1; i <= seats; i++) {
-        attendeeInputs.innerHTML += `
-          <input type="text" id="attendee${i}" placeholder="Guest ${i} Name" required>
-        `;
-      }
-    } else {
-      // 1 seat → auto-fill the single guest
-      attendeeInputs.innerHTML = `<input type="text" id="attendee1" value="${name}" readonly>`;
-    }
-  } else {
-    seatInfo.textContent = "Sorry, your name was not found on the guest list.";
-    rsvpForm.classList.add("hidden");
+  if (guestList[name] === undefined) {
+    message.textContent = "❌ Error: Guest not found.";
+    return;
   }
+
+  const seats = guestList[name];
+  let attendees = [];
+
+  if (seats === 1) {
+    // Only the main guest
+    attendees.push(name);
+  } else {
+    // Collect all attendees (main guest + typed names)
+    for (let i = 1; i <= seats; i++) {
+      const input = document.getElementById(`attendee${i}`);
+      if (input && input.value.trim() !== "") {
+        attendees.push(input.value.trim());
+      }
+    }
+  }
+
+  // Make sure at least one attendee is recorded
+  if (attendees.length === 0) {
+    message.textContent = "⚠️ Please confirm at least one name.";
+    return;
+  }
+
+  // ✅ Send to Google Apps Script (replace URL with your script’s URL)
+  fetch("YOUR_GOOGLE_APPS_SCRIPT_URL", {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      guestName: name,
+      attendance: attendance,
+      attendees: attendees
+    })
+  })
+  .then(() => {
+    message.textContent = "✅ RSVP submitted successfully! Thank you 💕";
+    document.getElementById("rsvpForm").classList.add("hidden");
+  })
+  .catch(() => {
+    message.textContent = "⚠️ There was an error submitting your RSVP. Please try again.";
+  });
 }
 
 // Function triggered when clicking "Submit RSVP"
