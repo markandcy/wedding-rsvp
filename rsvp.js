@@ -136,7 +136,7 @@ function submitRSVP() {
   console.log("Submitting RSVP:", payload);
 
   // TODO: Replace with your Google Apps Script Web App URL
-  fetch("YOUR_GOOGLE_APPS_SCRIPT_URL", {
+  fetch("https://script.google.com/macros/s/AKfycbxCLI-6iddHLx9ni3goQWXRfyXDDqIZyEefgvCjB1RYB_lYHS9bAN7rMO50Hi52bBnyFQ/exec", {
     method: "POST",
     body: JSON.stringify(payload)
   })
