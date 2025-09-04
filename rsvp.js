@@ -1,5 +1,7 @@
 /* ======== GUEST LIST (edit as needed) ======== */
 const guestList = {
+  "Cyrel Anne Soriano": 1,
+  "Mark Anthony Pena": 1,
   "Antonio Reyes": 2,
   "Jojo Agot": 2,
   "Daniel Herrera": 2,
