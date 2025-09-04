@@ -87,13 +87,13 @@ function checkGuest() {
 
 function showRSVPForm(guestName, seats) {
   const formBox = document.getElementById("form-box");
-  let fields = `
-    <input type="text" id="guest-1" value="${guestName}" readonly />
-  `;
+  let fields = "";
 
-  // Add extra optional boxes if seats > 1
-  for (let i = 2; i <= seats; i++) {
-    fields += `<input type="text" id="guest-${i}" placeholder="Guest ${i} Name (optional)" />`;
+  if (seats > 1) {
+    fields += `<input type="text" id="guest-1" value="${guestName}" readonly />`;
+    for (let i = 2; i <= seats; i++) {
+      fields += `<input type="text" id="guest-${i}" placeholder="Guest ${i} Name (optional)" />`;
+    }
   }
 
   formBox.innerHTML = `
@@ -110,10 +110,14 @@ function showRSVPForm(guestName, seats) {
 function submitRSVP(guestName, seats) {
   let attendees = [];
 
-  for (let i = 1; i <= seats; i++) {
-    const field = document.getElementById(`guest-${i}`);
-    if (field && field.value.trim()) {
-      attendees.push(field.value.trim());
+  if (seats === 1) {
+    attendees.push(guestName); // auto-add solo guest
+  } else {
+    for (let i = 1; i <= seats; i++) {
+      const field = document.getElementById(`guest-${i}`);
+      if (field && field.value.trim()) {
+        attendees.push(field.value.trim());
+      }
     }
   }
 
@@ -121,7 +125,7 @@ function submitRSVP(guestName, seats) {
   message.innerHTML = `✅ Thank you, ${guestName}! We saved your RSVP for ${attendees.length} guest(s).`;
 
   // 🔗 Send data to Google Sheets
-  fetch("YOUR_GOOGLE_APPS_SCRIPT_URL", {
+  fetch("https://script.google.com/macros/s/AKfycbxCLI-6iddHLx9ni3goQWXRfyXDDqIZyEefgvCjB1RYB_lYHS9bAN7rMO50Hi52bBnyFQ/exec", {
     method: "POST",
     mode: "no-cors",
     headers: { "Content-Type": "application/json" },
