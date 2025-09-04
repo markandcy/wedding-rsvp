@@ -74,52 +74,61 @@ const guestList = {
   "Ella": 1
 };
 
-let currentGuest = null;
-
 function checkGuest() {
-  const name = document.getElementById("guestName").value.trim();
-  if (guestList[name]) {
-    currentGuest = name;
-    document.getElementById("seatInfo").innerText = 
-      `Welcome ${name}! You have ${guestList[name]} seat(s) reserved.`;
-    generateAttendeeInputs(guestList[name]);
-    document.getElementById("rsvpForm").classList.remove("hidden");
-    document.getElementById("message").innerText = "";
+  const inputName = document.getElementById("guestName").value.trim();
+  const seats = guestList[inputName];
+
+  if (seats) {
+    showRSVPForm(inputName, seats);
   } else {
-    document.getElementById("message").innerText = 
-      "Name not found. Please contact Mark & Cy for assistance.";
+    alert("Sorry, your name is not on the guest list.");
   }
 }
 
-function generateAttendeeInputs(seats) {
-  const container = document.getElementById("attendeeInputs");
-  container.innerHTML = "";
-  for (let i = 0; i < seats; i++) {
-    container.innerHTML += 
-      `<input type="text" placeholder="Attendee ${i+1}" class="attendee">`;
+function showRSVPForm(guestName, seats) {
+  const formBox = document.getElementById("form-box");
+  let fields = `
+    <input type="text" id="guest-1" value="${guestName}" readonly />
+  `;
+
+  // Add extra optional boxes if seats > 1
+  for (let i = 2; i <= seats; i++) {
+    fields += `<input type="text" id="guest-${i}" placeholder="Guest ${i} Name (optional)" />`;
   }
+
+  formBox.innerHTML = `
+    <h2>Hello, ${guestName}!</h2>
+    <p>You have <strong>${seats}</strong> seat${seats > 1 ? "s" : ""} reserved.</p>
+    <form id="rsvp-form">
+      ${fields}
+      <button type="button" onclick="submitRSVP('${guestName}', ${seats})">Confirm Attendance</button>
+    </form>
+    <div id="message"></div>
+  `;
 }
 
-function submitRSVP() {
-  if (!currentGuest) return;
-  
-  const attendance = document.getElementById("attendance").value;
-  const attendees = Array.from(document.querySelectorAll(".attendee"))
-    .map(input => input.value.trim()).filter(v => v);
+function submitRSVP(guestName, seats) {
+  let attendees = [];
 
-  fetch("https://script.google.com/macros/s/AKfycbwhxMOykaFsjmNAllQkkxhu9rg021cv3536cks5Yz_F5e3ywkx6s3zvqlZu8tmzgLgcnw/exec", {
+  for (let i = 1; i <= seats; i++) {
+    const field = document.getElementById(`guest-${i}`);
+    if (field && field.value.trim()) {
+      attendees.push(field.value.trim());
+    }
+  }
+
+  const message = document.getElementById("message");
+  message.innerHTML = `✅ Thank you, ${guestName}! We saved your RSVP for ${attendees.length} guest(s).`;
+
+  // 🔗 Send data to Google Sheets
+  fetch("YOUR_GOOGLE_APPS_SCRIPT_URL", {
     method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      guestName: currentGuest,
-      attendance: attendance,
+      mainGuest: guestName,
+      seatsAllocated: seats,
       attendees: attendees
     })
-  })
-  .then(() => {
-    document.getElementById("message").innerText = "RSVP submitted! Thank you 💕";
-    document.getElementById("rsvpForm").classList.add("hidden");
-  })
-  .catch(() => {
-    document.getElementById("message").innerText = "Error submitting RSVP. Try again.";
   });
 }
