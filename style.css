@@ -1,117 +1,72 @@
-/* Import Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@400;600&display=swap');
-
-/* General reset */
+/* General page styling */
 body {
-  font-family: "Poppins", sans-serif;
-  background: linear-gradient(135deg, #fdfbfb, #fcefee);
-  color: #333;
-  margin: 0;
-  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: url("https://png.pngtree.com/png-clipart/20230411/original/pngtree-spring-flowers-border-decoration-png-image_9046101.png") no-repeat center top;
+  background-size: cover;
+  background-attachment: fixed;
   text-align: center;
-  position: relative;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-/* Decorative floral background using your PNG */
-body::before,
-body::after {
-  content: "";
-  position: absolute;
-  background: url('https://png.pngtree.com/png-clipart/20230623/original/pngtree-cute-png-transparent-spring-flower-background-png-image_9173210.png') no-repeat;
-  background-size: 250px;
-  width: 250px;
-  height: 250px;
-  z-index: 0;
-  opacity: 0.25;
-}
-
-body::before {
-  top: 10px;
-  left: 10px;
-}
-
-body::after {
-  bottom: 10px;
-  right: 10px;
+  padding: 50px;
+  color: #333;
 }
 
 /* Title */
 h1 {
-  font-family: "Playfair Display", serif;
-  font-size: 2.5rem;
-  margin-top: 30px;
-  color: #5c3d2e;
-  position: relative;
-  z-index: 1;
+  font-size: 2.5em;
+  margin-bottom: 20px;
+  color: #5a3e36;
+  text-shadow: 1px 1px 2px #f8e1e1;
 }
 
-/* Form box */
+/* Box container */
 .form-box {
-  background: #ffffff;
-  max-width: 500px;
-  margin: 40px auto;
-  padding: 25px;
+  background: rgba(255, 255, 255, 0.95);
   border-radius: 20px;
-  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
-  border: 2px solid #f2d7d5;
-  position: relative;
-  z-index: 1;
+  padding: 25px;
+  max-width: 500px;
+  margin: auto;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
-/* Labels */
-label {
-  display: block;
-  margin: 15px 0 8px;
-  font-weight: 600;
-  color: #5c3d2e;
-  font-size: 1.1rem;
-}
-
-/* Input + Select */
-input[type="text"], select {
+/* Inputs & select */
+input, select {
   padding: 10px;
+  margin: 10px 0;
+  width: 80%;
   border: 1px solid #e0c3c3;
   border-radius: 10px;
-  width: 80%;
-  font-size: 1rem;
-  margin-bottom: 15px;
   outline: none;
-  transition: border 0.3s ease;
+  font-size: 1em;
 }
 
-input[type="text"]:focus, select:focus {
-  border-color: #a78bfa;
+input:focus, select:focus {
+  border-color: #ff9eb5;
+  box-shadow: 0 0 6px rgba(255, 158, 181, 0.5);
 }
 
 /* Buttons */
 button {
-  background: #a8dadc;
-  color: #fff;
-  font-size: 1rem;
+  background: #ff9eb5;
   border: none;
   padding: 10px 20px;
-  margin: 10px;
-  border-radius: 30px;
+  margin: 15px 5px;
+  border-radius: 12px;
+  color: white;
+  font-size: 1em;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s ease;
+  transition: 0.3s;
 }
 
 button:hover {
-  background: #457b9d;
+  background: #ff6f91;
   transform: scale(1.05);
 }
 
-/* Messages */
-#message {
-  margin-top: 20px;
-  font-weight: bold;
-  font-size: 1.1rem;
-  color: #2a9d8f;
+/* RSVP Form Hidden by default */
+.hidden {
+  display: none;
 }
 
-/* Suggestions box */
+/* Suggestions dropdown */
 .suggestions-box {
   background: #fff;
   border: 1px solid #e0c3c3;
@@ -123,19 +78,21 @@ button:hover {
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   position: relative;
   z-index: 5;
+  text-align: left;
 }
 
 .suggestion-item {
   padding: 8px 12px;
   cursor: pointer;
-  text-align: left;
 }
 
 .suggestion-item:hover {
   background: #fcefee;
 }
 
-/* Hide/show elements */
-.hidden {
-  display: none;
+/* Messages */
+#message {
+  margin-top: 15px;
+  font-weight: bold;
+  color: #5a3e36;
 }
