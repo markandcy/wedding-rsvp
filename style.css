@@ -14,15 +14,15 @@ body {
   overflow-x: hidden;
 }
 
-/* Decorative floral background using SVGs */
+/* Decorative floral background using PNG */
 body::before,
 body::after {
   content: "";
   position: absolute;
-  background: url('https://i.ibb.co/3BpZ3kW/flower-corner.png') no-repeat;
-  background-size: 200px;
-  width: 200px;
-  height: 200px;
+  background: url('https://png.pngtree.com/png-clipart/20230623/original/pngtree-cute-png-transparent-spring-flower-background-png-image_9173210.png') no-repeat;
+  background-size: 250px;
+  width: 250px;
+  height: 250px;
   z-index: 0;
   opacity: 0.25;
 }
@@ -36,6 +36,7 @@ body::after {
   bottom: 10px;
   right: 10px;
 }
+
 
 /* Title */
 h1 {
