@@ -1,31 +1,69 @@
+/* General page background */
 body {
-  font-family: Georgia, serif;
-  background: #fff8f0;
+  font-family: 'Georgia', serif;
+  background: linear-gradient(to bottom right, #fffaf0, #fdfdfd);
   text-align: center;
   margin: 0;
   padding: 0;
 }
-h1 { color: #b03060; }
+
+/* Heading */
+h1 {
+  color: #6b4226; /* warm earthy brown */
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.5rem;
+  margin-top: 2rem;
+}
+
+/* Form container */
 .form-box {
-  background: #fff;
+  background: #ffffff;
   max-width: 500px;
   margin: 2rem auto;
   padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  border-radius: 16px;
+  border: 2px solid #f3d5d0; /* pastel border */
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
 }
-input, button, select {
+
+/* Inputs and dropdowns */
+input, select {
   width: 100%;
   padding: 0.7rem;
-  margin-top: 0.5rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+  margin-top: 0.7rem;
+  border-radius: 8px;
+  border: 1px solid #dcb4a1;
+  background: #fffaf8;
+  font-size: 1rem;
 }
+
+/* Buttons */
 button {
-  background: #b03060;
+  background: #f28c8c; /* spring pink */
   color: #fff;
   border: none;
   cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: bold;
+  padding: 0.8rem;
+  margin-top: 1rem;
+  border-radius: 10px;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
-button:hover { background: #902750; }
-.hidden { display: none; }
+
+button:hover {
+  background: #d96b6b;
+  transform: scale(1.05);
+}
+
+/* Messages */
+#message {
+  margin-top: 1rem;
+  color: #6b4226;
+  font-weight: bold;
+}
+
+/* Hide until needed */
+.hidden {
+  display: none;
+}
